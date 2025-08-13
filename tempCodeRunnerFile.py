@@ -1,0 +1,1 @@
+har_casscade = cv.CascadeClassifier('haar_cascade.xml')

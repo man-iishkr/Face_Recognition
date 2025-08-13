@@ -1,16 +1,19 @@
 import cv2 as cv
-#Reading Image
-#img=cv.imread("C:\\Users\\manis\\Pictures\\Camera Roll\\WIN_20241003_02_05_12_Pro.jpg")
-
-#cv.imshow('Street',img)
-#cv.waitKey(0)
 
 #Reading Video
 capture = cv.VideoCapture(0)
+har_casscade = cv.CascadeClassifier('haar_cascade.xml')
 
 while True:
     isTrue, frame = capture.read()
-    cv.imshow('Video', frame)
+    flipped_frame = cv.flip(frame, 1) 
+    face_rect = har_casscade.detectMultiScale(flipped_frame, scaleFactor=1.1, minNeighbors=5)
+
+    for (x, y, w, h) in face_rect:
+        cv.rectangle(flipped_frame, (x, y), (x + w, y + h), (0, 255, 0), thickness=2)
+        
+    cv.imshow('Video', flipped_frame)
+
 
     if cv.waitKey(20) & 0xFF == ord('d'):
         break

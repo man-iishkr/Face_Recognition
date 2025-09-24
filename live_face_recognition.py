@@ -51,43 +51,44 @@ def recognize(embedding, threshold=0.5):
     results.sort(key=lambda x: x[1], reverse=True)
     best_match = results[0]
     return best_match if best_match[1] > threshold else ("Unknown", best_match[1])
-
-file = load_attendance(excle)
 marked = set()
-cap = VideoStream(src=0).start()
-time.sleep(2.0)
-frame_cnt=0
+def recognition_loop():
+    global running, attendance_df, excel_file_path, marked_today
 
-while True:
-    frame1 = cap.read()
-    frame=cv2.flip(frame1,1)
-    if frame is None:
-        continue
+    cap = cv2.VideoCapture(0)
+    model = insightface.app.FaceAnalysis(name='buffalo_l')
+    model.prepare(ctx_id=-1)
+    embeddings = np.load('embeddings.npy', allow_pickle=True).item()
 
-    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    if frame_cnt % 5 == 0:
+    while running:
+        ret, frame = cap.read()
+        if not ret:
+            continue
+        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         faces = model.get(frame_rgb)
+        for face in faces:
+            if face is None or face.normed_embedding is None:
+                continue
+            x1, y1, x2, y2 = face.bbox.astype(int)
+            embedding = face.normed_embedding
+            name, score = recognize_face(embedding, embeddings)
+            if name != "Unknown":
+                mark_attendance(attendance_df, name,marked)
+        time.sleep(0.05)  # small delay to reduce CPU usage
 
-    for face in faces:
-        if face is None or face.kps is None or face.normed_embedding is None:
-           print("⚠️ Invalid face skipped (no landmarks or embedding)")
-           continue
-        x1, y1, x2, y2 = face.bbox.astype(int)
-        embedding = face.normed_embedding
-        name, score = recognize(embedding)
-        if name:  
-            file= mark_attendance(file, name, marked)
+    cap.release()
+    if attendance_df is not None and excel_file_path is not None:
+        attendance_df.to_excel(excel_file_path, index=False, engine='openpyxl')
 
-        # Draw box + name
-        cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-        label = f"{name} ({score:.2f})"
-        cv2.putText(frame, label, (x1, y1 - 10),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 0), 2)
+def recognize_face(embedding, embeddings, threshold=0.5):
+    results = [(name, cosine_similarity(embedding, emb)) for name, emb in embeddings.items()]
+    results.sort(key=lambda x: x[1], reverse=True)
+    best_match = results[0]
+    return best_match if best_match[1] > threshold else ("Unknown", best_match[1])
 
-    cv2.imshow("Live Face Recognition(Press d to exit)", frame)
-    if cv2.waitKey(1) & 0xFF == ord('d') :
-        break
-file.to_excel(excle, index=False,engine='openpyxl')
-print(f"Attendance saved to {excle}")
-cap.release()
-cv2.destroyAllWindows()
+def stop_recognition():
+    global running
+    running = False
+
+def get_marked_names():
+    return list(marked)

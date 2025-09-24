@@ -20,7 +20,7 @@ running = False
 excel_file_path = None
 attendance_df = None
 embeddings = np.load('embeddings.npy', allow_pickle=True).item()
-
+marked_today = set()
 # ------------------ Load InsightFace Model ------------------
 model = insightface.app.FaceAnalysis(name='buffalo_l')
 model.prepare(ctx_id=-1)
@@ -82,6 +82,7 @@ def generate_frames():
                 name, score = recognize_face(embedding)
                 if name != "Unknown":
                     mark_attendance(attendance_df, name)
+                    marked_today.add(name)
 
                 # Draw bounding box + label
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
@@ -130,6 +131,9 @@ def stop():
     global running
     running = False
     return jsonify({"status": "stopped"})
+@app.route('/status')
+def status():
+    return jsonify({"marked": list(marked_today)})
 
 # ------------------ Run Flask ------------------
 if __name__ == '__main__':

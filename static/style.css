@@ -1,0 +1,70 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f2f5;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  padding: 30px;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.controls input[type="file"] {
+  flex: 1;
+  margin-right: 10px;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+#startBtn {
+  background-color: #28a745;
+  color: white;
+}
+
+#stopBtn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.camera {
+  text-align: center;
+  margin: 20px 0;
+}
+
+#video {
+  width: 100%;
+  height: auto;
+  border: 2px solid #333;
+}
+
+.status {
+  background-color: #e9ecef;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.status p {
+  margin: 5px 0;
+}

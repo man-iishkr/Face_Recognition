@@ -27,6 +27,20 @@ document.getElementById('startBtn').onclick = async () => {
     if (!data.marked.length && !startData.status) clearInterval(interval);
   }, 1000);
 };
+function updateDateTime() {
+  const now = new Date();
+  const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+  const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+
+  document.getElementById('current-date').textContent =
+    '📅 Date: ' + now.toLocaleDateString(undefined, dateOptions);
+  document.getElementById('current-time').textContent =
+    '⏰ Time: ' + now.toLocaleTimeString(undefined, timeOptions);
+}
+
+// Start the time updater
+setInterval(updateDateTime, 1000);
+updateDateTime();
 
 document.getElementById('stopBtn').onclick = async () => {
   await fetch('/stop', { method: 'POST' });

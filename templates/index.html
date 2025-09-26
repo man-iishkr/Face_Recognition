@@ -23,8 +23,14 @@
     }
 
     h1 {
-      margin-bottom: 25px;
+      margin-bottom: 10px;
       color: #333;
+    }
+
+    #datetime-display {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 20px;
     }
 
     form {
@@ -104,22 +110,33 @@
   <div class="container">
     <h1>📸 Face Recognition Attendance System</h1>
 
+  
+    <div id="datetime-display">
+      <div id="current-date">📅 Date: --</div>
+      <div id="current-time">⏰ Time: --</div>
+    </div>
+
+    
     <form id="upload-form" enctype="multipart/form-data">
       <input type="file" name="file" accept=".xlsx" required />
       <button type="submit">📤 Upload Excel</button>
     </form>
+
 
     <div class="buttons">
       <button onclick="startCamera()">▶ Start Recognition</button>
       <button onclick="stopCamera()">⏹ Stop Recognition</button>
     </div>
 
+    
     <div id="video-container">
       <img id="video-feed" src="/video_feed" width="640" height="480" />
     </div>
 
+
     <div id="log">📂 Upload an Excel file to begin</div>
 
+  
     <div id="marked-names">
       <h3>✅ Names Marked Today:</h3>
       <div id="names-list">None yet</div>
@@ -127,6 +144,21 @@
   </div>
 
   <script>
+    
+    function updateDateTime() {
+      const now = new Date();
+      const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+      const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+
+      document.getElementById('current-date').textContent =
+        '📅 Date: ' + now.toLocaleDateString(undefined, dateOptions);
+      document.getElementById('current-time').textContent =
+        '⏰ Time: ' + now.toLocaleTimeString(undefined, timeOptions);
+    }
+    setInterval(updateDateTime, 1000); 
+    updateDateTime();  
+
+
     const form = document.getElementById('upload-form');
     const logDiv = document.getElementById('log');
     const namesList = document.getElementById('names-list');
@@ -156,6 +188,7 @@
       logDiv.innerText = data.message || "🛑 Recognition stopped!";
     }
 
+    
     async function updateMarkedNames() {
       const res = await fetch('/status');
       const data = await res.json();
@@ -168,7 +201,6 @@
       }
     }
 
-    // Poll every 2 seconds to update marked names
     setInterval(updateMarkedNames, 2000);
     updateMarkedNames();
   </script>

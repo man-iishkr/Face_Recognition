@@ -1,87 +1,76 @@
-# Face Recognition Attendance Tracker (WIP)
+# Face Recognition Attendance Tracker
 
-This project is a **face recognition system** intended to serve as the foundation for a future **attendance tracking solution**. It performs real-time face detection and recognition using a webcam feed, and identifies individuals based on a pre-trained dataset. As of the latest update, it also includes a **daily Excel-based attendance logging feature**.
+This project is a complete, web-based **Face Recognition Attendance System** that identifies individuals via a live webcam feed and automatically logs attendance into an uploaded Excel sheet using a modern, interactive GUI.
 
 ---
 
-## ✨ Features
+## ✨ Key Features & Updates
 
-- Real-time **face detection** using OpenCV and InsightFace
-- **Face recognition** using embeddings from the **Buffalo model**
-- Utilizes **cosine similarity** for accurate face matching
-- Displays names with **similarity score** for known individuals
-- Labels unknown faces as **"Unknown"**
-- Draws bounding boxes around detected faces in the live feed
-- ✅ **New:** Daily **Excel attendance logging**
-  - Marks attendance once per person **per day**
-  - Automatically creates a column for today's date if not present
-  - Saves **time of first detection** for each known person
-  - Updates attendance in the **same Excel file**, no duplicates
+### 🌐 Web Interface (GUI)
+* **Architecture:** Built on a **Flask** web server for the backend API and routing.
+* **Frontend:** The interactive UI is delivered using **HTML** (templates), **CSS** (`style.css`), and dynamic **JavaScript** (`script.js`).
+* **Aesthetics:** Features a **modern, high-contrast dark theme** with neon-like glowing accents and a glass-like container effect, providing a slick, futuristic UI.
+* **UI Controls:** Dedicated buttons to **Start** and **Stop** the real-time recognition stream.
+* **Information:** Displays the **live date and time** on the interface for temporal accuracy.
+
+### 📊 Attendance Core
+* **Upload Facility:** Users can **upload the attendance Excel sheet (`.xlsx`)** directly via the GUI before starting recognition.
+* **Live Status:** Provides real-time status messages and lists **Names Marked Today** with live updates via client-side JavaScript.
+* **Logging:** Marks attendance only once per person **per day** in the Excel file, logging the time of the first detection.
+
+### 🧠 Recognition Engine
+* **Real-time** face detection using OpenCV and InsightFace.
+* **Face recognition** powered by the embeddings from the **Buffalo model**.
 
 ---
 
 ## 👨‍💻 Technologies Used
 
-| Library       | Purpose                                         |
-|---------------|-------------------------------------------------|
-| `OpenCV`      | Capturing webcam feed and drawing boxes         |
-| `InsightFace` | Deep learning face recognition (Buffalo model)  |
-| `NumPy`       | Face embeddings and similarity computations     |
-| `Pandas`      | Attendance record handling in Excel             |
-| `openpyxl`    | Writing to `.xlsx` Excel files                  |
+| Technology | Purpose |
+| :--- | :--- |
+| **Flask** | Web server and API routing for the GUI |
+| **HTML/CSS/JS** | Front-end UI, styling, and client-side logic (`script.js`) |
+| `OpenCV` | Capturing webcam feed and frame processing |
+| `InsightFace` | Deep learning face recognition |
+| `Pandas` & `openpyxl` | Attendance data management and Excel file handling |
 
 ---
 
-## 📁 Dataset
+## 🖥️ Project Structure
 
-The model is trained on a small sample dataset containing facial images of a few faces and the following popular individuals  :
-
-- Vladimir Putin
-- Narendra Modi
-- Donald Trump
-- Xi Jinping
-
-> 📸 These images are stored locally and used to generate embeddings for recognition.
-
----
-
-## 🧠 Model Details
-
-- **Face Detection:** InsightFace MTCNN, fallback to OpenCV Haar Cascade
-- **Embedding Model:** `Buffalo_S` model from InsightFace
-- **Similarity Metric:** Cosine Similarity
-
----
-
-## 🖥️ How It Works
-
-1. The webcam feed is started using OpenCV
-2. Faces are detected frame-by-frame
-3. Embeddings are computed using the Buffalo model
-4. Cosine similarity is used to match against known embeddings
-5. If matched:
-   - Display name and similarity score
-   - If first detection **on that day**, mark attendance in Excel
-6. If unmatched:
-   - Label as **"Unknown"**
-
----
-
-## 📅 Attendance Logging
-
-- Attendance is tracked in an Excel sheet (`.xlsx`) that the user provides at runtime
-- A new column (e.g., `2025-09-23`) is created for each day
-- Time of first appearance is logged in the corresponding cell
-- The Excel file is saved **in-place** (same location) when the session ends
-
----
+The project follows the required Flask application layout for serving static and dynamic content:
+Face_Recognition/
+├── static/
+│   ├── script.js             # Client-side JavaScript logic
+│   └── style.css             # Custom CSS for the UI theme
+├── templates/
+│   └── index.html            # Main GUI served to the user
+├── app.py                    # Flask application, routing, and backend API endpoints
+├── face_embedding.py         # Module for generating and loading face embeddings
+└── live_face_recognition.py  # Core logic for video streaming and recognition
 
 ## 🛠️ Installation & Usage
 
 ### Prerequisites
 
-- Python 3.8+
-- Install dependencies:
+-   Python 3.8+
 
-```bash
-pip install opencv-python insightface numpy pandas openpyxl
+### Installation
+
+1.  Install all required Python packages:
+
+    ```bash
+    pip install Flask opencv-python insightface numpy pandas openpyxl
+    ```
+
+### Running the Application
+
+1.  Start the Flask server from your terminal:
+
+    ```bash
+    python app.py
+    ```
+
+2.  Open your web browser and navigate to the local address provided by Flask (e.g., **`http://127.0.0.1:5000/`**).
+
+3.  Use the web interface to **Upload Excel** and click **Start Recognition** to begin the attendance session.

@@ -39,16 +39,16 @@ This project is a complete, web-based **Face Recognition Attendance System** tha
 ## 🖥️ Project Structure
 
 The project follows the required Flask application layout for serving static and dynamic content:
-Face_Recognition/
-├── static/
-│   ├── script.js             # Client-side JavaScript logic
-│   └── style.css             # Custom CSS for the UI theme
-├── templates/
-│   └── index.html            # Main GUI served to the user
-├── app.py                    # Flask application, routing, and backend API endpoints
-├── face_embedding.py         # Module for generating and loading face embeddings
-└── live_face_recognition.py  # Core logic for video streaming and recognition
-
+Face_Recognition/<br>
+├── static/<br>
+│   ├── script.js             # Client-side JavaScript logic<br>
+│   └── style.css             # Custom CSS for the UI theme<br>
+├── templates/<br>
+│   └── index.html            # Main GUI served to the user<br>
+├── app.py                    # Flask application, routing, and backend API endpoints<br>
+├── face_embedding.py         # Module for generating and loading face embeddings<br>
+└── live_face_recognition.py  # Core logic for video streaming and recognition<br>
+<br>
 ## 🛠️ Installation & Usage
 
 ### Prerequisites

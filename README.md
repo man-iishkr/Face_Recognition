@@ -39,16 +39,16 @@ This project is a complete, web-based **Face Recognition Attendance System** tha
 ## 🖥️ Project Structure
 
 The project follows the required Flask application layout for serving static and dynamic content:
-Face_Recognition/
-├── static/
-│   ├── script.js             # Client-side JavaScript logic
-│   └── style.css             # Custom CSS for the UI theme
-├── templates/
-│   └── index.html            # Main GUI served to the user
-├── app.py                    # Flask application, routing, and backend API endpoints
-├── face_embedding.py         # Module for generating and loading face embeddings
-└── live_face_recognition.py  # Core logic for video streaming and recognition
-
+Face_Recognition/<br>
+├── static/<br>
+│   ├── script.js             # Client-side JavaScript logic<br>
+│   └── style.css             # Custom CSS for the UI theme<br>
+├── templates/<br>
+│   └── index.html            # Main GUI served to the user<br>
+├── app.py                    # Flask application, routing, and backend API endpoints<br>
+├── face_embedding.py         # Module for generating and loading face embeddings<br>
+└── live_face_recognition.py  # Core logic for video streaming and recognition<br>
+<br>
 ## 🛠️ Installation & Usage
 
 ### Prerequisites
@@ -64,13 +64,17 @@ Face_Recognition/
     ```
 
 ### Running the Application
+<br>
+<br>
+ 1. Open face_embedding.py and insert location of your dataset(img) folder on which your model is to be trained,and run the program. <br>
 
-1.  Start the Flask server from your terminal:
+2.  Start the Flask server from your terminal:
 
     ```bash
     python app.py
     ```
+   
 
-2.  Open your web browser and navigate to the local address provided by Flask (e.g., **`http://127.0.0.1:5000/`**).
+3.  Open your web browser and navigate to the local address provided by Flask (e.g., **`http://127.0.0.1:5000/`**).
 
-3.  Use the web interface to **Upload Excel** and click **Start Recognition** to begin the attendance session.
+4.  Use the web interface to **Upload Excel** and click **Start Recognition** to begin the attendance session.

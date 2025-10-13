@@ -64,13 +64,17 @@ Face_Recognition/<br>
     ```
 
 ### Running the Application
+<br>
+<br>
+ 1. Open face_embedding.py and insert location of your dataset(img) folder on which your model is to be trained,and run the program. <br>
 
-1.  Start the Flask server from your terminal:
+2.  Start the Flask server from your terminal:
 
     ```bash
     python app.py
     ```
+   
 
-2.  Open your web browser and navigate to the local address provided by Flask (e.g., **`http://127.0.0.1:5000/`**).
+3.  Open your web browser and navigate to the local address provided by Flask (e.g., **`http://127.0.0.1:5000/`**).
 
-3.  Use the web interface to **Upload Excel** and click **Start Recognition** to begin the attendance session.
+4.  Use the web interface to **Upload Excel** and click **Start Recognition** to begin the attendance session.
